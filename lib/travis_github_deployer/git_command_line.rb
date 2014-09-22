@@ -26,6 +26,9 @@ class GitCommandLine
     git("reset \$(git rev-list --max-parents=0 HEAD) -- #{files_to_reset}")
   end
   
+  # git log -1 --format="%H" --reverse -- x/bad.bin
+  # git checkout -b tmp `git log -1 --format="%H" --reverse -- x/bad.bin`^
+  
   def force_push
     git("push -f")
   end
