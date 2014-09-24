@@ -71,13 +71,10 @@ class TravisGithubDeployer
     prepare_files_to_deploy(configuration["files_to_deploy"])
   end
   
-  def get_destination_and_add_file_to_purge source, target_or_hash
-      if target_or_hash.instance_of?(Hash)
-        files_to_purge << source if target_or_hash["purge"]   
-        destination_file = target_or_hash["destination"]
-      else
-        destination_file = target_or_hash
-      end
+  def get_destination_and_add_file_to_purge source, target
+    return target if target.respond_to?(:<<)
+    files_to_purge << source if target["purge"]   
+    return target["destination"]
   end
   
   def prepare_files_to_deploy files_hash
